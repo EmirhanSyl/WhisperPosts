@@ -5,6 +5,7 @@ using namespace std;
 #include <string>
 #include <vector>
 #include "postman.h"
+#include "address.h"
 
 enum DepartmentType{
     post_office,
@@ -16,11 +17,15 @@ class Department
 private:
     int id;
     string name;
+    Address address;
     DepartmentType type;
-    vector<Postman> employees;
+    vector<Postman *> employees; // Not sure?
 public:
-    Department(int initID, string initName, DepartmentType initType);
+    Department(int initID, string initName, Address initAddress, DepartmentType initType);
     ~Department();
+
+    void addPostman(Postman *postman); 
+    Postman *getPostman(int index);
 };
 
 

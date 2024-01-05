@@ -21,7 +21,7 @@ private:
 public:
     void setStateNote(string stateNote);
     string getStateNote();
-    
+
     virtual void handleState(Post &post) = 0;
 };
 
@@ -50,7 +50,7 @@ class Post
 private:
     User sender;
     User receiver;
-    Department currentDept;
+    Department *currentDept;
     PostState *currentState;
 
     vector<pair<Department *, PostState *>> history;
