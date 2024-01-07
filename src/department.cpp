@@ -1,9 +1,10 @@
 #include "../header/Department.h"
+#include "../header/database.h"
 
 Department::Department(int initID, string initName, Address initAddress, DepartmentType initType)
     : id(initID), name(initName), address(initAddress), type(initType)
 {
-    // Will be implemented later...
+    Database::departments.push_back(this);
 }
 
 Department::~Department() {}

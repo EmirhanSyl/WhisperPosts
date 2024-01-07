@@ -12,7 +12,7 @@ class User : public Person
 private:
     vector<Address> addresses;
 public:
-    User(int id, const string &name, const string &username, const string &password, const string &mail);
+    User(int id, const string &name, const string &username, const string &password);
     User();
     ~User();
 

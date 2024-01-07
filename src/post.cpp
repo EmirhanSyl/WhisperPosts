@@ -1,4 +1,5 @@
 #include "../header/post.h"
+#include "../header/database.h"
 
 void PostState::setStateNote(string stateNote)
 {

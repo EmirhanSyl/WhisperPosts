@@ -1,7 +1,7 @@
 #include "../header/postman.h"
 
-Postman::Postman(int id, const string &name, const string &username, const string &password, const string &mail, Department *department)
-    : Person(id, name, username, password, mail), department(department)
+Postman::Postman(int id, const string &name, const string &username, const string &password, Department *department)
+    : Person(id, name, username, password), department(department)
 {
     // Will be implemented later...
 }

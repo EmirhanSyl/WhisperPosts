@@ -3,16 +3,13 @@
 #include <iomanip>
 #include <random>
 
-User::User(int id, const string &name, const string &username, const string &password, const string &mail)
-    : Person(id, name, username, password, mail)
+User::User(int id, const string &name, const string &username, const string &password)
+    : Person(id, name, username, password)
 {
     // Will be implemented later...
 }
 
-User::User() : Person(0, "", "", "", "")
-{
-    // Default constructor
-}
+User::User() : Person(0, "", "", "") {}
 
 User::~User(){}
 

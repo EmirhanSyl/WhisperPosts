@@ -1,18 +1,10 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include "../src/database.cpp"
-#include "../src/person.cpp"
-#include "../src/admin.cpp"
-#include "../src/department.cpp"
-#include "../src/user.cpp"
-#include "../src/postman.cpp"
-#include "../src/address.cpp"
-#include "../src/post.cpp"
+#include "../header/database.h"
 
-using namespace std;
+vector<Person *> Database::users;
+vector<Post *> Database::posts;
+vector<Department *> Database::departments;
 
-int test(){
+void Database::initDatabase(){
     Admin admin(0, "Emirhan", "admin", "123");
 
     Address dept1_addrs("Turkey", "Istanbul", "Kucukcekmece", "Apt-1", 37.7749, -122.4194);
@@ -31,12 +23,23 @@ int test(){
 
     User user1(4, "Fatma", "yesil", "123");
     User user2(4, "Hatice", "mavi", "123");
-
 }
 
-int main()
+template <typename Base, typename Derived>
+static bool instanceof (const Derived *ptr)
 {
-    test();
-    cout << Database::users.at(1)->getName() << endl;
-    return 0;
+    return dynamic_cast<const Base *>(ptr) != nullptr;
 }
+
+Person *Database::login(const string &username, const string &password)
+{
+    for (int i = 0; i < Database::users.size(); i++)
+    {
+        if (Database::users[i]->getUsername() == username && Database::users[i]->getPassword() == password)
+        {
+            return Database::users[i];
+        }
+    }
+    return nullptr;
+}
+
