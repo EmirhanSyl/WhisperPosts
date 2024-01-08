@@ -34,9 +34,220 @@ int test(){
 
 }
 
+int Display();
+
 int main()
 {
     test();
-    cout << Database::users.at(1)->getName() << endl;
+    Display();
+    //cout << Database::users.at(1)->getName() << endl;
     return 0;
+}
+
+int Display()
+{
+    Person *account;
+    int option;
+    int isLoggedIn = 0;
+
+    while (true)
+    {
+        if (isLoggedIn && (instanceof <Admin>(account)))
+        {
+            printf("\n--------- Welcome Admin ---------\n", account->getName());
+
+            int choice;
+
+            cout << "\n1- Create Postman" << endl;
+            cout << "2- Create Department" << endl;
+            cout << "3- Show All Departments" << endl;
+            cout << "4- Show All Postmen" << endl;
+            cout << "5- Change Postman Department" << endl;
+            cout << "6- Fire Postman" << endl;
+            cout << "7- Logout" << endl;
+
+            cout << "\nSelect an option : ";
+            cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+
+                break;
+
+            case 2:
+                
+                break;
+
+            case 3:
+                
+                break;
+
+            case 4:
+                
+                break;
+
+            case 5:
+                
+                break;
+
+            case 6:
+                
+                break;
+
+            case 7:
+                
+                break;
+
+            default:
+                printf("\nInvalid option. Please select [1-7]\n");
+                while (getchar() != '\n');
+                break;
+            }
+        }
+        else if (isLoggedIn && (instanceof <Postman>(account)))
+        {
+            int switchOption = 0;
+
+            cout << "\n--------- Welcome " << account->getName() << " --------- " << endl;
+
+            cout << "\n1- Show account information" << endl;
+            cout << "2- Register new post" << endl;
+            cout << "3- View all posts in department" << endl;
+            cout << "4- Update post status" << endl;
+            cout << "5- Logout" << endl;
+
+            cout << "\nSelect an option : ";
+            cin >> switchOption;
+
+            switch (switchOption)
+            {
+            case 1:
+
+                break;
+
+            case 2:
+
+                break;
+
+            case 3:
+
+                break;
+
+            case 4:
+
+                break;
+
+            case 5:
+                isLoggedIn = 0;
+                break;
+            }
+        }
+        else if (isLoggedIn && (instanceof <User>(account)))
+        {
+            int switchOption = 0;
+
+            cout << "\n--------- Welcome " << account->getName() << " --------- " << endl;
+
+            cout << "\n1- Show account information" << endl;
+            cout << "2- Add new address" << endl;
+            cout << "3- Delete existed address" << endl;
+            cout << "3- Register new post" << endl;
+            cout << "4- View post status" << endl;
+            cout << "5- Logout" << endl;
+
+            cout << "\nSelect an option : ";
+            cin >> switchOption;
+
+            switch (switchOption)
+            {
+            case 1:
+                
+                break;
+
+            case 2:
+                
+                break;
+
+            case 3:
+                
+                break;
+
+            case 4:
+                
+                break;
+
+            case 5:
+                isLoggedIn = 0;
+                break;
+            }
+        }
+        else
+        {
+            cout << "\n--------- WELCOME TO VOTING SYSTEM ---------\n";
+
+            cout << "1- Login\n";
+            cout << "2- Register\n";
+            cout << "3- Exit\n";
+
+            cout << "\nSelect an option: ";
+            cin >> option;
+
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
+
+            string name;
+            string username;
+            string password;
+            string mail;
+
+            switch (option)
+            {
+            case 1:
+                cout << "\nEnter your username: ";
+                getline(cin, username);
+
+                cout << "Enter your password: ";
+                getline(cin, password);
+
+                
+                cout << "\nLogging in...\n\n";
+                account = Database::login(username, password);
+                if (account != nullptr)
+                {
+                    isLoggedIn = true;
+                    break;
+                }
+                else
+                {
+                    cout << "User not found! Please try again.\n";
+                }
+                break;
+
+            case 2:
+                cout << "\nEnter your name: ";
+                getline(cin, name);
+
+                cout << "Enter your username: ";
+                getline(cin, username);
+
+                cout << "Enter your password: ";
+                getline(cin, password);
+
+                cout << "Enter your mail: ";
+                getline(cin, mail);
+
+                account = new User(Database::users.size() + 1, name, username, password);
+                cout << "\nAccount created successfully!\n\n";
+                isLoggedIn = true;
+                break;
+
+            case 3:
+                cout << "\n------------ Goodbye! ------------\n";
+                return 0;
+
+            default:
+                cout << "Invalid option. Please select 1, 2, or 3.\n";
+            }
+        }
+    }
 }
