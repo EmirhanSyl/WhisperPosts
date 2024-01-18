@@ -12,7 +12,7 @@ private:
 public:
     Postman(int id, const string &name, const string &username, const string &password, Department *department);
     Postman();
-    ~Postman();
+    virtual ~Postman() override {};
 
     void setDepartment(Department *newDepartment);
     Department *getDepartment();

@@ -6,12 +6,22 @@ Postman::Postman(int id, const string &name, const string &username, const strin
     // Will be implemented later...
 }
 
-Postman::~Postman() {}
+void Postman::setDepartment(Department *newDepartment)
+{
+    int removeID = getId();
+    department->employees.erase(
+        remove_if(department->employees.begin(), department->employees.end(),
+                  [removeID](const Postman *p)
+                  {
+                      return p->getId() == removeID;
+                  }),
+        department->employees.end());
 
-void Postman::setDepartment(Department *newDepartment){
     department = newDepartment;
+    newDepartment->addPostman(this);
 }
 
-Department *Postman::getDepartment(){
+Department *Postman::getDepartment()
+{
     return department;
 }

@@ -11,7 +11,6 @@ User::User(int id, const string &name, const string &username, const string &pas
 
 User::User() : Person(0, "", "", "") {}
 
-User::~User(){}
 
 void User::addAddress(const string &initialCountry, const string &initialCity,
                       const string &initialStreet, const string &initialApartment)
@@ -30,13 +29,33 @@ void User::addAddress(const string &initialCountry, const string &initialCity,
 
 
     Address newAddress(initialCountry, initialCity, initialStreet, initialApartment, latitude, longitude);
-    addresses.push_back(newAddress);
+    addresses.push_back(&newAddress);
+}
+
+void User::addAddress(Address *address)
+{
+    addresses.push_back(address);
 }
 
 Address User::getAddress(int index)
 {
     if (index >= 0 && index < addresses.size())
     {
-        return addresses[index];
+        return *addresses[index];
     }
+}
+
+void User::removeAddress(int index){
+    if (index >= 0 && index < addresses.size())
+    {
+        addresses.erase(addresses.begin() + index);
+    }
+    else
+    {
+        std::cerr << "Invalid index. Please provide a valid index to remove an address." << std::endl;
+    }
+}
+
+vector<Address *> User::getAddressList(){
+    return addresses;
 }

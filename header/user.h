@@ -10,16 +10,20 @@ using namespace std;
 class User : public Person
 {
 private:
-    vector<Address> addresses;
+    vector<Address *> addresses;
 public:
     User(int id, const string &name, const string &username, const string &password);
     User();
-    ~User();
+    virtual ~User() override {};
 
     void addAddress(const string &initialCountry, const string &initialCity, 
         const string &initialStreet, const string &initialApartment);
 
+    void addAddress(Address *address);
+
     Address getAddress(int index);
+    void removeAddress(int index);
+    vector<Address *> getAddressList();
 };
 
 #endif

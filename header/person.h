@@ -16,7 +16,7 @@ private:
 public:
     Person();
     Person(int id, const string &name, const string &username, const string &password);
-    ~Person();
+    virtual ~Person();
 
     // Getter functions
     int getId() const;

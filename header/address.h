@@ -4,6 +4,7 @@
 using namespace std;
 #include <string>
 #include <iostream>
+#include <random>
 
 class Address
 {
@@ -12,12 +13,14 @@ private:
     const string city;
     const string street;
     const string apartment;
-    const double latitude;
-    const double longitude;
+    double latitude;
+    double longitude;
 
 public:
     Address(const string &initialCountry, const string &initialCity, const string &initialStreet,
             const string &initialApartment, double initialLatitude, double initialLongitude);
+    Address(const string &initialCountry, const string &initialCity, const string &initialStreet,
+            const string &initialApartment);
     ~Address();
 
     // Getter functions
@@ -25,13 +28,11 @@ public:
     string getCity() const;
     string getStreet() const;
     string getApartment() const;
+    string to_string() const;
     double getLatitude() const;
     double getLongitude() const;
 
-    double calculateDistance(Address *address);
-
-    bool operator<=(Address *address);
-    bool operator>=(Address *address);
+    friend double operator-(Address address1, Address address2);
 };
 
 

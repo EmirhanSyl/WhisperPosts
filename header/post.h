@@ -19,49 +19,72 @@ private:
     string stateNote;
 
 public:
+    string stateName;
     void setStateNote(string stateNote);
     string getStateNote();
 
     virtual void handleState(Post &post) = 0;
+    virtual void complateState(Post &post, string stateNote) = 0;
 };
 
 class RecipientPostOfficeState : public PostState
 {
 public:
     void handleState(Post &post) override;
+    void complateState(Post &post, string stateNote) override;
 };
 
 class TransferringState : public PostState
 {
 public:
     void handleState(Post &post) override;
+    void complateState(Post &post, string stateNote) override;
 };
 
 class TargetPostOfficeState : public PostState
 {
 public:
     void handleState(Post &post) override;
+    void complateState(Post &post, string stateNote) override;
 };
 
-
+class DoneState : public PostState
+{
+public:
+    void handleState(Post &post) override;
+    void complateState(Post &post, string stateNote) override;
+};
 
 class Post
 {
 private:
+    
+public:
+    int id;
     User sender;
-    User receiver;
+    Address senderAddress;
+    Address recieverAddress;
     Department *currentDept;
     PostState *currentState;
 
     vector<pair<Department *, PostState *>> history;
-public:
-    Post();
+
+    Post(int id, User sender, Address senderAddress, Address recieverAddress, Department *currentDept, PostState *currentState);
     ~Post();
 
     void setState(PostState *newState);
+    
     void setDepartment(Department *newDepartment);
     void addToHistory();
 };
+
+class PostHandler
+{
+public:
+    static Post *createPost(User sender, Address senderAddress, Address recieverAddress);
+    static Department *calculateRoute(Post post, DepartmentType type);
+};
+
 
 
 #endif

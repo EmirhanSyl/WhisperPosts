@@ -31,15 +31,43 @@ static bool instanceof (const Derived *ptr)
     return dynamic_cast<const Base *>(ptr) != nullptr;
 }
 
-Person *Database::login(const string &username, const string &password)
+Person *Database::login(const string username, const string password)
 {
-    for (int i = 0; i < Database::users.size(); i++)
+    for (Person *p : users)
     {
-        if (Database::users[i]->getUsername() == username && Database::users[i]->getPassword() == password)
+        if (p->getUsername() == username && p->getPassword() == password)
         {
-            return Database::users[i];
+            return p;
         }
     }
+    
     return nullptr;
 }
 
+Person *Database::createUser(string name, string username, string  password){
+    Person *newPerson = new User(users.size(), name, username, password);
+
+    return newPerson;
+}
+
+Person *Database::createPostman(string name, Department *department)
+{
+    Postman *newPostman = new Postman(Database::users.size(), name, name, "123", department);
+    department->addPostman(newPostman);
+    return newPostman;
+}
+
+Department *Database::createDepartment(string name, Address address, DepartmentType type){
+    return new Department(departments.size(), name, address, type);
+}
+
+void Database::removeUser(int id){
+
+    users.erase(
+        std::remove_if(users.begin(), users.end(),
+                       [id](const Person *p)
+                       {
+                           return p->getId() == id;
+                       }),
+        users.end());
+}
