@@ -167,7 +167,8 @@ int Display()
             cout << "4- Show All Postmen" << endl;
             cout << "5- Change Postman Department" << endl;
             cout << "6- Fire Postman" << endl;
-            cout << "7- Logout" << endl;
+            cout << "7- Write postman information to file" << endl;
+            cout << "8- Logout" << endl;
 
             cout << "\nSelect an option : ";
             cin >> choice;
@@ -283,6 +284,14 @@ int Display()
                 break;
 
             case 7:
+                cout << "enter a filename: ";
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                getline(cin, name);
+                Database::writePostmanDataToFile(name);
+                cout << name << ".txt wrote successfully!"; 
+                break;
+
+            case 8:
                 isLoggedIn = 0;
                 break;
 
@@ -304,8 +313,9 @@ int Display()
 
             cout << "\n1- Show account information" << endl;
             cout << "2- View all posts in department" << endl;
-            cout << "3- Update post status" << endl;
-            cout << "4- Logout" << endl;
+            cout << "3- View old posts in department" << endl;
+            cout << "4- Update post status" << endl;
+            cout << "5- Logout" << endl;
 
             cout << "\nSelect an option : ";
             cin >> choice;
@@ -316,7 +326,7 @@ int Display()
                 cout << "\nName : " << postman->getName() << endl;
                 cout << "Username : " << postman->getUsername() << endl;
                 cout << "Password : " << postman->getPassword() << endl;
-                cout << "Mail : " << postman->getDepartment()->getName() << endl;
+                cout << "Deppartment : " << postman->getDepartment()->getName() << endl;
                 break;
 
             case 2:
@@ -324,6 +334,31 @@ int Display()
                 break;
 
             case 3:
+                for (int i = 0; i < Database::posts.size(); i++)
+                {
+                    for (int j = 0; j < Database::posts[i]->history.size(); j++)
+                    {
+                        if (Database::posts[i]->history[i].first->getId() == postman->getDepartment()->getId())
+                        {
+                            cout << "index : " << i << endl;
+                            cout << "Post ID: " << Database::posts[i]->id << endl;
+                            cout << "Sender Name: " << Database::posts[i]->sender.getName() << endl;
+                            cout << "Sender Address: " << Database::posts[i]->senderAddress.to_string() << endl;
+                            cout << "Receiver Address: " << Database::posts[i]->recieverAddress.to_string() << endl;
+                            cout << "Current Department: " << Database::posts[i]->currentDept->getName() << endl;
+                            cout << "Current State: " << Database::posts[i]->currentState->stateName << endl;
+                            if (Database::posts[i]->currentDept->getId() != postman->getDepartment()->getId())
+                            {
+                                cout << "This post not available in the department right now!" << endl;
+                            }
+                            
+                            cout << "--------------------------------------------" << endl;
+                        }
+                    }
+                }
+                break;
+
+            case 4:
                 viewPostsInDepertment(postman->getDepartment());
                 cout << "Please select a post to update its status: ";
                 cin >> secChoice;
@@ -340,7 +375,7 @@ int Display()
                 Database::posts[secChoice]->currentState->complateState(*Database::posts[secChoice], stateNote);
                 break;
 
-            case 4:
+            case 5:
                 isLoggedIn = 0;
                 break;
             }

@@ -71,3 +71,46 @@ void Database::removeUser(int id){
                        }),
         users.end());
 }
+
+Post **Database::findPostsByUser(int userID, int &size){
+    Post **users_posts = (Post **)malloc(sizeof(Post*));
+    int foundPosts = 0;
+    for (int i = 0; i < Database::posts.size(); i++)
+    {
+        if (Database::posts[i]->sender.getId() == userID)
+        {
+            users_posts[foundPosts] = Database::posts[i];
+            foundPosts++;
+            users_posts = (Post **)realloc(users_posts, sizeof(Post*) * foundPosts);
+        }
+    }
+
+    foundPosts = size;
+    return users_posts;
+}
+
+void Database::writePostmanDataToFile(string filename)
+{
+    std::ofstream outputFile(filename + "txt");
+
+    if (!outputFile.is_open())
+    {
+        std::cerr << "Error opening file " << filename << std::endl;
+        return;
+    }
+
+    for (Person *person : users)
+    {
+        if (instanceof<Postman>(person))
+        {
+            Postman *postman = dynamic_cast<Postman *>(person);
+            outputFile << "Postman ID: " << postman->getId() << "\t";
+            outputFile << "Name: " << postman->getName() << "\t";
+            outputFile << "Department: " << postman->getDepartment()->getName();
+            outputFile << std::endl;
+        }
+        
+    }
+
+    outputFile.close();
+}

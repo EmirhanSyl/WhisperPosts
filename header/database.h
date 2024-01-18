@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <fstream>
 #include "person.h"
 #include "user.h"
 #include "admin.h"
@@ -23,6 +24,8 @@ public:
     static Department *createDepartment(string name, Address address, DepartmentType type);
 
     static void removeUser(int id);
+    static Post **findPostsByUser(int userID, int &size);
+    static void writePostmanDataToFile(string filename);
 };
 
 #endif
